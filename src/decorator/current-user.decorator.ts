@@ -16,7 +16,6 @@ export const CurrentUser = createParamDecorator(
   async (_data: unknown, context: ExecutionContext) => {
     const ctx = GqlExecutionContext.create(context);
     const token = ctx.getContext().req.headers.authorization.split(' ')[1];
-    return token;
     if (token) {
       const authKey = admin
         .auth()

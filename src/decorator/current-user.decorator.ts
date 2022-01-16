@@ -1,8 +1,8 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
-/* import * as admin from 'firebase-admin'; */
+import * as admin from 'firebase-admin';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-/* require('dotenv').config();
+require('dotenv').config();
 
 admin.initializeApp({
   credential: admin.credential.cert({
@@ -10,14 +10,14 @@ admin.initializeApp({
     privateKey: process.env.PRIVATE_KEY?.replace(/\\n/g, '\n'),
     clientEmail: process.env.CLIENT_EMAIL,
   }),
-}); */
+});
 
 export const CurrentUser = createParamDecorator(
   async (_data: unknown, context: ExecutionContext) => {
     const ctx = GqlExecutionContext.create(context);
     const token = ctx.getContext().req.headers.authorization.split(' ')[1];
     return token;
-    /*    if (token) {
+    if (token) {
       const authKey = admin
         .auth()
         .verifyIdToken(token)
@@ -28,6 +28,6 @@ export const CurrentUser = createParamDecorator(
       return authKey;
     } else {
       return '';
-    } */
+    }
   },
 );

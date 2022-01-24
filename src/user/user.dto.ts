@@ -38,11 +38,11 @@ export class UpdateTodoInput {
   @Field(() => ID)
   id: string;
 
-  @Field(() => String)
-  task: string;
+  @Field(() => String, { nullable: true })
+  task?: string;
 
-  @Field(() => Boolean)
-  completed: boolean;
+  @Field(() => Boolean, { nullable: true })
+  completed?: boolean;
 }
 
 @InputType()

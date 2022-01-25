@@ -48,7 +48,7 @@ export class User {
 
   @Prop([Todo])
   @Field(() => [Todo], { nullable: true })
-  todos: Todo[];
+  todos?: Todo[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

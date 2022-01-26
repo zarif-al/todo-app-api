@@ -20,9 +20,6 @@ export class CreateUserInput {
 
 @InputType()
 export class CreateTodoInput {
-  @Field(() => ID)
-  userId: string;
-
   @Field(() => String)
   task: string;
 
@@ -32,9 +29,6 @@ export class CreateTodoInput {
 
 @InputType()
 export class UpdateTodoInput {
-  @Field(() => ID)
-  userId: string;
-
   @Field(() => ID)
   id: string;
 
@@ -47,9 +41,6 @@ export class UpdateTodoInput {
 
 @InputType()
 export class DeleteTodoInput {
-  @Field(() => ID)
-  userId: string;
-
   @Field(() => ID)
   id: string;
 }

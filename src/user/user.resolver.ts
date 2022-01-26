@@ -25,17 +25,26 @@ export class UserResolver {
 
   //Todo Operations
   @Mutation(() => User)
-  async createTodo(@Args('input') input: CreateTodoInput): Promise<User> {
-    return this.userService.createTodo(input);
+  async createTodo(
+    @CurrentUser() fireId: string,
+    @Args('input') input: CreateTodoInput,
+  ): Promise<User> {
+    return this.userService.createTodo(fireId, input);
   }
 
   @Mutation(() => User)
-  async updateTodo(@Args('input') input: UpdateTodoInput): Promise<User> {
-    return this.userService.updateTodo(input);
+  async updateTodo(
+    @CurrentUser() fireId: string,
+    @Args('input') input: UpdateTodoInput,
+  ): Promise<User> {
+    return this.userService.updateTodo(fireId, input);
   }
 
   @Mutation(() => User)
-  async deleteTodo(@Args('input') input: DeleteTodoInput): Promise<User> {
-    return this.userService.deleteTodo(input);
+  async deleteTodo(
+    @CurrentUser() fireId: string,
+    @Args('input') input: DeleteTodoInput,
+  ): Promise<User> {
+    return this.userService.deleteTodo(fireId, input);
   }
 }

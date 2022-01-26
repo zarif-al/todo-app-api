@@ -39,9 +39,9 @@ export default class UserService {
 
   //Todo Operations
 
-  async createTodo(input: CreateTodoInput): Promise<User> {
+  async createTodo(fireId: string, input: CreateTodoInput): Promise<User> {
     try {
-      const user = await this.userModel.findOne({ _id: input.userId });
+      const user = await this.userModel.findOne({ fireId });
       const todo = {
         id: nanoid(),
         createdAt: new Date(),
@@ -58,25 +58,25 @@ export default class UserService {
     }
   }
 
-  async updateTodo(input: UpdateTodoInput): Promise<User> {
+  async updateTodo(fireId: string, input: UpdateTodoInput): Promise<User> {
     try {
-      const user = await this.userModel.findOne({ _id: input.userId });
+      const user = await this.userModel.findOne({ fireId });
       const todo = user.todos.find((todo) => todo.id === input.id);
       todo.task = input.task !== undefined ? input.task : todo.task;
       todo.completed = input.completed !== undefined ? input.completed : todo.completed;
       todo.updatedAt = new Date();
-      const savedUser = await this.userModel.findByIdAndUpdate(input.userId, user, { new: true });
+      const savedUser = await this.userModel.findByIdAndUpdate(user._id, user, { new: true });
       return savedUser;
     } catch (error) {
       throw error;
     }
   }
 
-  async deleteTodo(input: DeleteTodoInput): Promise<User> {
+  async deleteTodo(fireId: string, input: DeleteTodoInput): Promise<User> {
     try {
-      const user = await this.userModel.findOne({ _id: input.userId });
+      const user = await this.userModel.findOne({ fireId });
       user.todos = user.todos.filter((todo) => todo.id !== input.id);
-      const savedUser = await this.userModel.findByIdAndUpdate(input.userId, user, {
+      const savedUser = await this.userModel.findByIdAndUpdate(user._id, user, {
         new: true,
       });
 

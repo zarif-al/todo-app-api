@@ -4,7 +4,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 export type UserDocument = User & Document;
 
 @ObjectType()
-class Todo {
+export class Todo {
   @Field(() => ID)
   id: string;
 
@@ -26,10 +26,6 @@ class Todo {
 export class User {
   @Field(() => ID)
   _id: string;
-
-  @Prop()
-  @Field(() => String)
-  userName: string;
 
   @Prop()
   @Field(() => String)

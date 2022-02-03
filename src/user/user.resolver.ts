@@ -1,6 +1,6 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { CreateUserInput, CreateTodoInput, UpdateTodoInput, DeleteTodoInput } from './user.dto';
-import { User } from './user.schema';
+import { User, Todo } from './user.schema';
 import UserService from './user.service';
 import { CurrentUser } from 'src/decorator/current-user.decorator';
 
@@ -24,27 +24,27 @@ export class UserResolver {
   }
 
   //Todo Operations
-  @Mutation(() => User)
+  @Mutation(() => Todo)
   async createTodo(
     @CurrentUser() fireId: string,
     @Args('input') input: CreateTodoInput,
-  ): Promise<User> {
+  ): Promise<Todo> {
     return this.userService.createTodo(fireId, input);
   }
 
-  @Mutation(() => User)
+  @Mutation(() => Todo)
   async updateTodo(
     @CurrentUser() fireId: string,
     @Args('input') input: UpdateTodoInput,
-  ): Promise<User> {
+  ): Promise<Todo> {
     return this.userService.updateTodo(fireId, input);
   }
 
-  @Mutation(() => User)
+  @Mutation(() => Todo)
   async deleteTodo(
     @CurrentUser() fireId: string,
     @Args('input') input: DeleteTodoInput,
-  ): Promise<User> {
+  ): Promise<Todo> {
     return this.userService.deleteTodo(fireId, input);
   }
 }

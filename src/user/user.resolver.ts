@@ -13,11 +13,6 @@ export class UserResolver {
     return this.userService.createUser(input);
   }
 
-  @Query(() => [User])
-  async getUsers(): Promise<User[]> {
-    return this.userService.findAll();
-  }
-
   @Query(() => User, { nullable: true })
   currentUser(@CurrentUser() fireId: string): Promise<User | null> {
     return this.userService.findOneByFireId(fireId);

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from './user.schema';
+import { User, UserDocument, Todo } from './user.schema';
 import { CreateUserInput, CreateTodoInput, UpdateTodoInput, DeleteTodoInput } from './user.dto';
 import { Model } from 'mongoose';
 import { nanoid } from 'nanoid';
@@ -39,7 +39,7 @@ export default class UserService {
 
   //Todo Operations
 
-  async createTodo(fireId: string, input: CreateTodoInput): Promise<User> {
+  async createTodo(fireId: string, input: CreateTodoInput): Promise<Todo> {
     try {
       const user = await this.userModel.findOne({ fireId });
       const todo = {
@@ -52,35 +52,37 @@ export default class UserService {
       user.todos.push(todo);
       await user.save();
 
-      return user;
+      return todo;
     } catch (error) {
       throw error;
     }
   }
 
-  async updateTodo(fireId: string, input: UpdateTodoInput): Promise<User> {
+  async updateTodo(fireId: string, input: UpdateTodoInput): Promise<Todo> {
     try {
       const user = await this.userModel.findOne({ fireId });
       const todo = user.todos.find((todo) => todo.id === input.id);
       todo.task = input.task !== undefined ? input.task : todo.task;
       todo.completed = input.completed !== undefined ? input.completed : todo.completed;
       todo.updatedAt = new Date();
-      const savedUser = await this.userModel.findByIdAndUpdate(user._id, user, { new: true });
-      return savedUser;
+      await this.userModel.findByIdAndUpdate(user._id, user, { new: true });
+      return todo;
     } catch (error) {
       throw error;
     }
   }
 
-  async deleteTodo(fireId: string, input: DeleteTodoInput): Promise<User> {
+  async deleteTodo(fireId: string, input: DeleteTodoInput): Promise<Todo> {
     try {
       const user = await this.userModel.findOne({ fireId });
+      const todo = user.todos.find((todo) => todo.id === input.id);
+
       user.todos = user.todos.filter((todo) => todo.id !== input.id);
-      const savedUser = await this.userModel.findByIdAndUpdate(user._id, user, {
+      await this.userModel.findByIdAndUpdate(user._id, user, {
         new: true,
       });
 
-      return savedUser;
+      return todo;
     } catch (error) {
       throw error;
     }

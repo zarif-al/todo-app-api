@@ -28,15 +28,6 @@ export default class UserService {
     }
   }
 
-  async findAll(): Promise<User[]> {
-    try {
-      const users = await this.userModel.find().lean();
-      return users;
-    } catch (error) {
-      throw error;
-    }
-  }
-
   //Todo Operations
 
   async createTodo(fireId: string, input: CreateTodoInput): Promise<Todo> {

@@ -10,8 +10,7 @@ require('dotenv').config();
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      autoSchemaFile:
-        process.env.NODE_ENV == 'production' ? false : join(process.cwd(), 'src/schema.gql'),
+      autoSchemaFile: join(process.cwd(), 'tmp/schema.gql'),
       introspection: true,
       playground: true,
     }),

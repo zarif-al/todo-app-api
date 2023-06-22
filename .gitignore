@@ -37,5 +37,3 @@ lerna-debug.log*
 # ENV
 .env
 
-# Schema
-/src/schema.gql
